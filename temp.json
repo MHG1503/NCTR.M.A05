@@ -1,0 +1,24 @@
+[
+  {
+    "Name": "Bun",
+    "Id": 1,
+    "Description": "Bo",
+    "Ingredients": [
+      "Bun",
+      "Bo",
+      "Hue"
+    ],
+    "Category": "Bun"
+  },
+  {
+    "Name": "Pho",
+    "Id": 2,
+    "Description": "Pho Bo",
+    "Ingredients": [
+      "Pho",
+      "Bo",
+      "Hanh"
+    ],
+    "Category": "Pho"
+  }
+]
