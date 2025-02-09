@@ -8,16 +8,13 @@ public class RecipeManager
 {
     List<Recipe> recipes= new List<Recipe>();
 
-    public void AddRecipe(int id, string name, string description, string ingredientsStr, string category){
-        if(recipes.Find(recipe => recipe.Id == id) != null){
-            System.Console.WriteLine("Already exist recipe : " + name);
+    public void AddRecipe(Recipe recipe){
+        if(recipes.Find(re => re.Id == recipe.Id) != null){
+            System.Console.WriteLine("Already exist recipe : " + recipe.Name);
             return;
         }
         List<string> ingredientList = new List<string>();
-        if(ingredientsStr != null && ingredientsStr.Length > 0){
-            ingredientList = ingredientsStr.Split(",").ToList();
-        }
-        recipes.Add(new Recipe(id, name,description,ingredientList,category));
+        recipes.Add(recipe);
     }
 
     public List<Recipe> GetAllRecipes(){
@@ -79,7 +76,7 @@ public class RecipeManager
             }else{
                 List<Recipe> tempRecipes = JsonSerializer.Deserialize<List<Recipe>>(File.ReadAllText(fileName));
                 foreach(Recipe recipe in tempRecipes){
-                    AddRecipe(recipe.Id,recipe.Name,recipe.Description,recipe.IngredientToString(),recipe.Category);
+                    AddRecipe(recipe);
                 }
                 System.Console.WriteLine("Import success");
             }
@@ -94,12 +91,13 @@ public class RecipeManager
 
                 for (int row = 2; row <= rowCount; row++)
                 {
-                    AddRecipe(
+                    AddRecipe(new Recipe(
                         Convert.ToInt32(worksheet.Cells[row, 1].Value),
                         (string)worksheet.Cells[row, 2].Value,
                         (string)worksheet.Cells[row, 3].Value,
-                        (string)worksheet.Cells[row, 4].Value,
-                        (string)worksheet.Cells[row, 5].Value);
+                        ((string)worksheet.Cells[row, 4].Value).Split(",").ToList(),
+                        (string)worksheet.Cells[row, 5].Value)
+                    );
                 }
             }
             System.Console.WriteLine("Import success");

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using NCTR.M.A05.Manager;
+using NCTR.M.A05.Models;
 
 internal class Program
 {
@@ -37,7 +38,8 @@ internal class Program
                     string ingredients = Console.ReadLine();
                     System.Console.WriteLine("Enter recipe category");
                     string category = Console.ReadLine();
-                    recipeManager.AddRecipe(id, name,description,ingredients,category);
+                    Recipe recipe = new Recipe(id,name,description,ingredients.Split(",").ToList(),category);
+                    recipeManager.AddRecipe(recipe);
                     break;
                 case "2":
                     System.Console.WriteLine("========== All Recipes ==========");
